@@ -1,0 +1,8 @@
+{
+    
+    "intelephense.diagnostics.undefinedProperties": false,
+    "php.problems.exclude" : {
+        "/" : [416],
+        "vendor/" : true
+      }
+}
