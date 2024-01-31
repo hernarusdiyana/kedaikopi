@@ -62,11 +62,27 @@
                 <p class="text-sm font-medium text-gray-900">12k</p>
             </div>
         </div>
-		
+		<div class="group relative">
+            <div
+                class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                <img src="<?php echo base_url() . 'assets/images/espresso.jpg' ?>" alt="Espresso Coffee."
+                    class="h-full w-full object-cover object-center lg:h-full lg:w-full">
+            </div>
+            <div class="mt-4 flex justify-between">
+                <div>
+                    <h3 class="text-sm text-gray-700">
+                        <a href="">
+                            <span aria-hidden="true" class="absolute inset-0"></span>
+                            Espresso
+                        </a>
+                    </h3>
+                    <p class="mt-1 text-sm text-gray-500">Coffee</p>
+                </div>
+                <p class="text-sm font-medium text-gray-900">8k</p>
+            </div>
+        </div>
 		<?php foreach($products as $product): ?>
-        <div class="group relative">
-								
-								
+        <div class="group relative">		
             <div
                 class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80" >
 					<img src="data:image/jpeg;base64,<?= base64_encode($product->image) ?>" alt="Gambar Produk" class="h-full w-full object-cover object-center lg:h-full lg:w-full" loading="lazy">
@@ -74,7 +90,7 @@
             <div class="mt-4 flex justify-between">
                 <div>
                     <h3 class="text-sm text-gray-700">
-                        <a href="#">
+                        <a href="">
                             <span aria-hidden="true" class="absolute inset-0"></span>
                             <?= $product->name?>
                         </a>
@@ -82,90 +98,16 @@
                     <p class="mt-1 text-sm text-gray-500"><?= $product->category?></p>
                 </div>
                 <p class="text-sm font-medium text-gray-900"><?= $product->price?></p>
+				
             </div>
         </div>
+		<form action="<?= site_url('app/add_to_cart'); ?>" method="post">
+<!-- Isian untuk id_produk dan kuantitas -->
+			<input type="hidden" name="product_id" value="<?= $product->product_id?>">
+			<input type="number" name="quantity" value="1" min="1">
+			<button type="submit">Tambahkan ke Keranjang</button>
+		</form>
 		<?php endforeach; ?>
-        <div class="group relative">
-            <div
-                class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                <img src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
-                    alt="Front of men&#039;s Basic Tee in black."
-                    class="h-full w-full object-cover object-center lg:h-full lg:w-full">
-            </div>
-            <div class="mt-4 flex justify-between">
-                <div>
-                    <h3 class="text-sm text-gray-700">
-                        <a href="#">
-                            <span aria-hidden="true" class="absolute inset-0"></span>
-                            Basic Tee
-                        </a>
-                    </h3>
-                    <p class="mt-1 text-sm text-gray-500">Black</p>
-                </div>
-                <p class="text-sm font-medium text-gray-900">$35</p>
-            </div>
-        </div>
-        <div class="group relative">
-            <div
-                class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                <img src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-02.jpg"
-                    alt="Front of men&#039;s Basic Tee in black."
-                    class="h-full w-full object-cover object-center lg:h-full lg:w-full">
-            </div>
-            <div class="mt-4 flex justify-between">
-                <div>
-                    <h3 class="text-sm text-gray-700">
-                        <a href="#">
-                            <span aria-hidden="true" class="absolute inset-0"></span>
-                            Basic Tee
-                        </a>
-                    </h3>
-                    <p class="mt-1 text-sm text-gray-500">Black</p>
-                </div>
-                <p class="text-sm font-medium text-gray-900">$35</p>
-            </div>
-        </div>
-        <div class="group relative">
-            <div
-                class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                <img src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-03.jpg"
-                    alt="Front of men&#039;s Basic Tee in black."
-                    class="h-full w-full object-cover object-center lg:h-full lg:w-full">
-            </div>
-            <div class="mt-4 flex justify-between">
-                <div>
-                    <h3 class="text-sm text-gray-700">
-                        <a href="#">
-                            <span aria-hidden="true" class="absolute inset-0"></span>
-                            Basic Tee
-                        </a>
-                    </h3>
-                    <p class="mt-1 text-sm text-gray-500">Black</p>
-                </div>
-                <p class="text-sm font-medium text-gray-900">$35</p>
-            </div>
-        </div>
-        <div class="group relative">
-            <div
-                class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                <img src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
-                    alt="Front of men&#039;s Basic Tee in black."
-                    class="h-full w-full object-cover object-center lg:h-full lg:w-full">
-            </div>
-            <div class="mt-4 flex justify-between">
-                <div>
-                    <h3 class="text-sm text-gray-700">
-                        <a href="#">
-                            <span aria-hidden="true" class="absolute inset-0"></span>
-                            Basic Tee
-                        </a>
-                    </h3>
-                    <p class="mt-1 text-sm text-gray-500">Black</p>
-                </div>
-                <p class="text-sm font-medium text-gray-900">$35</p>
-            </div>
-        </div>
-
-        <!-- More products... -->
+     
     </div>
 </div>

@@ -8,6 +8,7 @@
     </div>
     <hr>
     <div class="mt-0 grid grid-cols-1 px-0 py-0 gap-y-2">
+		<?php foreach($cart as $item): ?>
         <!-- Product - -->
         <div class="group relative flex justify-between gap-x-6 rounded-lg py-4 h-28" id="product-cart">
             <div class="flex gap-x-6">
@@ -19,12 +20,12 @@
                     <h3 class="text-sm text-gray-700 w-full ">
                         <a href="#">
                             <span aria-hidden="true" class="absolute inset-0"></span>
-                            Latte
+                            <?= $item->quantity?>x
                         </a>
                     </h3>
 
-                    <p class="mt-1 text-sm text-gray-500">Coffee</p>
-                    <p class="text-sm font-medium text-gray-900">12k</p>
+                    <p class="mt-1 text-sm text-gray-500"><?= $item->name ?></p>
+                    <p class="text-sm font-medium text-gray-900"><?= $item->price ?></p>
                     <div class="relative inline-block text-left">
                         <select
                             class="block appearance-none text-sm w-full bg-white border border-gray-300 hover:border-gray-400 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200">
@@ -46,12 +47,12 @@
             <p class="text-sm font-medium text-gray-900">X</p>
         </div>
         <hr class="mt-5">
+		<?php endforeach; ?>
         <!-- Product - -->
         <div class="group relative flex justify-between gap-x-6 rounded-lg py-4 h-28" id="product-cart">
             <div class="flex gap-x-6">
                 <div class="h-24 w-24 overflow-hidden rounded-md bg-gray-900 lg:aspect-none ">
-                    <img src="<?php echo base_url() . 'assets/images/latte.jpg' ?>" alt="Coffee Latte."
-                        class=" object-center ">
+                    <img src="<?php echo base_url() . 'assets/images/latte.jpg' ?>" alt="Coffee Latte." class=" object-center ">
                 </div>
                 <div class="grid grid-col-1 gap-y-1">
                     <h3 class="text-sm text-gray-700 w-full ">
@@ -78,7 +79,6 @@
                             </svg>
                         </div>
                     </div>
-
                 </div>
             </div>
             <p class="text-sm font-medium text-gray-900">X</p>
