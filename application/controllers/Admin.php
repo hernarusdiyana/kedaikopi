@@ -6,6 +6,9 @@ class Admin extends CI_Controller
     function __construct()
     {
         parent::__construct();
+		$this->load->model('product_model');
+        $this->load->model('order_model');
+        $this->load->model('sales_model');
         if ($this->session->userdata('status') != "login") {
             redirect(base_url() . 'welcome?pesan=belum-login');
         };
@@ -14,13 +17,20 @@ class Admin extends CI_Controller
 
     function index()
     {
-        $data['orders'] = $this->db->query("SELECT * FROM orders ORDER BY id DESC limit 10")->result();
-        $data['users'] = $this->db->query("SELECT * FROM users ORDER BY id DESC limit 10")->result();
-        $data['products'] = $this->db->query("SELECT * FROM products ORDER BY id DESC limit 10")->result();
+        $data['orders'] = $this->db->query("SELECT * FROM orders ORDER BY order_id DESC limit 10")->result();
+        $data['users'] = $this->db->query("SELECT * FROM users ORDER BY user_id DESC limit 10")->result();
+        $data['products'] = $this->db->query("SELECT * FROM products ORDER BY product_id DESC limit 10")->result();
 
-        $this->load->view('admin/header');
-        $this->load->view('admin/index', $data);
-        $this->load->view('admin/footer');
+		$total_orders = $this->order_model->count_orders();
+		$total_products = $this->product_model->count_products();
+		$total_sales = $this->order_model->count_sales();
+		$data['total_orders'] = $total_orders;
+		$data['total_products'] = $total_products;
+		$data['total_sales'] = $total_sales;
+
+        $this->load->view('admin/header2');
+        $this->load->view('admin/index2', $data);
+        $this->load->view('admin/footer2');
     }
 
     function logout()
@@ -34,24 +44,17 @@ class Admin extends CI_Controller
         $this->load->model('product_model');
         $this->load->library('form_validation');
         $data['products'] = $this->product_model->get_data('products')->result();
-        $this->load->view('admin/header');
+        $this->load->view('admin/header2');
         $this->load->view('admin/products', $data);
-        $this->load->view('admin/footer');
+        $this->load->view('admin/footer2');
     }
     public function addProductForm() {
-        $this->load->view('admin/header');
+        $this->load->view('admin/header2');
         $this->load->view('admin/product_add');
-        $this->load->view('admin/footer');
+        $this->load->view('admin/footer2');
     }
 
     public function addProduct() {
-		
-			// $config = array(
-			// 	'upload_path' => "../../uploads/",
-			// 	'allowed_types' => "gif|jpg|png|jpeg",
-			// 	'overwrite' => TRUE,
-			// 	'max_size' => "20480" 
-			// 	);
 			$config['upload_path'] = './assets/uploads';
 			$config['allowed_types'] = 'gif|jpg|png';
 			$config['max_size'] = 10240;
@@ -62,9 +65,9 @@ class Admin extends CI_Controller
 
             if (!$this->upload->do_upload('image')) {
 				$error = array('error' => $this->upload->display_errors());
-				$this->load->view('admin/header');
+				$this->load->view('admin/header2');
         		$this->load->view('admin/product_add', $error);
-				$this->load->view('admin/footer');
+				$this->load->view('admin/footer2');
                 
 				// $error = array('error' => $this->upload->display_errors());
 				// $this->session->set_flashdata('message', '<div class="alert alert-danger">'.implode("",$error).'</div>');
@@ -94,335 +97,148 @@ class Admin extends CI_Controller
 				// Jika product_model, tampilkan pesan error
 				$data['upload_error'] = $this->upload->display_errors();
 			}
-		
+			
+			
+	}
+	function product_edit($product_id)
+	{
+	    $where = array(
+	        'product_id' => $product_id
+	    );
+		$this->load->model('kedai_model');
+	    $data['products'] = $this->kedai_model->edit_data($where,'products')->result();
+	    $this->load->view('admin/header2');
+	    $this->load->view('admin/product_edit',$data);
+	    $this->load->view('admin/footer2');
+	}
+	function product_update()
+            {
+                $product_id	= $this->input->post('product_id');
+                $name   	= $this->input->post('name');
+                $category   = $this->input->post('category');
+                $price  	= $this->input->post('price');
+                $image  	= $this->input->post('image');
+                $this->form_validation->set_rules('name','Nama Produk','required');
+                $this->form_validation->set_rules('category','Kategori Produk','required');
+
+                if($this->form_validation->run() != false) {
+                    $where = array(
+                        'product_id' => $product_id
+                    );
+                    $data = array(
+                        'name'    => $name,
+                        'category'    => $category,
+                        'price'   => $price,
+                        'image'   => $image,
+                    );
+                    $this->product_model->update_data($where,$data,'products');
+                    redirect(base_url().'admin/products');
+                } else {
+                    $where = array(
+                        'product_id' => $$product_id
+                    );
+                    $data['products'] = $this->product_model->edit_data($where,'products')->result();
+                    $this->load->view('admin/header');
+                    $this->load->view('admin/product_edit',$data);
+                    $this->load->view('admin/footer');
+                }
+            }
+
+	function product_delete($product_id)
+	{
+		$this->load->model('kedai_model');
+		$where = array(
+			'product_id' => $product_id
+		);
+		$this->kedai_model->delete_data($where,'products');
+		redirect(base_url().'admin/products');
+	} 
+	public function delete($id = null)
+	{
+		if(!$id){
+			show_404();
+		}
+
+		$this->load->model('feedback_model');
+		$this->feedback_model->delete($id);
+
+		$this->session->set_flashdata('message', 'Data was deleted');
+		redirect(site_url('admin/feedback'));
+	}
+	function orders()
+    {
+        $this->load->model('product_model');
+        $this->load->library('form_validation');
+        $data['orders'] = $this->product_model->get_data('orders')->result();
+        $this->load->view('admin/header2');
+        $this->load->view('admin/orders', $data);
+        $this->load->view('admin/footer2');
+    }
+	public function ubah_status() {
+        // Ambil data yang dikirimkan melalui AJAX
+        $order_id = $this->input->post('order_id');
+        $status = $this->input->post('status');
+
+        // Lakukan proses penyimpanan perubahan status pesanan di dalam model jika diperlukan
+        $this->order_model->ubah_status($order_id, $status);
+
+        // Untuk contoh sederhana, kita hanya akan mencetak data yang diterima dari AJAX
+        echo "ID Pesanan: " . $order_id . ", Status: " . $status;
+		echo "Status pesanan berhasil diubah.";
 	}
 
-    /*
-            function products_add()
-            {
-                $this->load->view('admin/header');
-                $this->load->view('admin/products_add');
-                $this->load->view('admin/footer');
-            }
+	public function update_status() {
+        // Process updating order status via AJAX
+        $order_id = $this->input->post('order_id');
+        $new_status = $this->input->post('new_status');
+		
+		$this->load->model('order_model');
+        $this->order_model->update_order_status($order_id, $new_status);
+        // if ($new_status == 'Lunas') {
+        //     $this->order_model->move_to_sales($order_id);
+        // }
+        echo json_encode(array('success' => true));
+    }
 
-            function products_add_act()
-            {
-                $merk   = $this->input->post('merk');
-                $plat   = $this->input->post('plat');
-                $warna  = $this->input->post('warna');
-                $tahun  = $this->input->post('tahun');
-                $status = $this->input->post('status');
-                $this->form_validation->set_rules('merk','Merk products','required');
-                $this->form_validation->set_rules('status','Status products','required');
+	public function pindah_ke_sales($order_id) {
+		// Ambil data pesanan berdasarkan ID
+		$order = $this->db->get_where('orders', array('order_id' => $order_id))->row_array();
+    
+		// Jika status order sudah 'Lunas', pindahkan ke tabel Sales
+		if ($order['status'] == 'Lunas') {
+			// Panggil method untuk memindahkan order ke tabel Sales
+			$this->order_model->pindah_ke_sales($order_id);
+			echo "Pesanan telah dipindahkan ke tabel Sales.";
+		} else {
+			echo "Pesanan belum memiliki status 'Lunas'.";
+		}
+	}
 
-                if($this->form_validation->run() != false) {
-                    $data = array(
-                        'products_merk'    => $merk,
-                        'products_plat'    => $plat,
-                        'products_warna'   => $warna,
-                        'products_tahun'   => $tahun,
-                        'products_status'  => $status
-                    );
-                    $this->m_rental->insert_data($data,'products');
-                    redirect(base_url().'admin/products');
-                } else {
-                    $this->load->view('admin/header');
-                    $this->load->view('admin/products_add');
-                    $this->load->view('admin/footer');
-                }
-            }
+	function sales2() {
+		$total_sales = $this->order_model->hitung_sales('selesai');
 
-            function products_edit($id)
-            {
-                $where = array(
-                    'product_id' => $id
-                );
-                $data['products'] = $this->m_rental->edit_data($where,'products')->result();
-                $this->load->view('admin/header');
-                $this->load->view('admin/products_edit',$data);
-                $this->load->view('admin/footer');
-            }
+		$sales_id = false;
+		if($total_sales > 0) {
+			$sales_id = $this->sales_model->save_sales($total_sales);
+		}
+		if($sales_id != false) {
+			$order_id = $this->order_model->get_order_id_with_status('selesai');
+			$this->sales_model->link_sales_to_order($sales_id, $order_id);
+		} else {
+			// Tidak ada penjualan yang dihasilkan dari order
+		}
+	}
 
-            function products_update()
-            {
-                $id     = $this->input->post('id');
-                $merk   = $this->input->post('merk');
-                $plat   = $this->input->post('plat');
-                $warna  = $this->input->post('warna');
-                $tahun  = $this->input->post('tahun');
-                $status = $this->input->post('status');
-                $this->form_validation->set_rules('merk','Merk products','required');
-                $this->form_validation->set_rules('status','Status products','required');
+		public function sales() {
+			$data['orders'] = $this->order_model->get_lunas_orders();
 
-                if($this->form_validation->run() != false) {
-                    $where = array(
-                        'product_id' => $id
-                    );
-                    $data = array(
-                        'products_merk'    => $merk,
-                        'products_plat'    => $plat,
-                        'products_warna'   => $warna,
-                        'products_tahun'   => $tahun,
-                        'products_status'  => $status
-                    );
-                    $this->m_rental->update_data($where,$data,'products');
-                    redirect(base_url().'admin/products');
-                } else {
-                    $where = array(
-                        'product_id' => $id
-                    );
-                    $data['products'] = $this->m_rental->edit_data($where,'products')->result();
-                    $this->load->view('admin/header');
-                    $this->load->view('admin/products_edit',$data);
-                    $this->load->view('admin/footer');
-                }
-            }
+			$this->load->view('admin/header2');
+			$this->load->view('admin/sales', $data);
+			$this->load->view('admin/footer2');
+		}
+	
+	}
 
-            function products_delete($id)
-            {
-                $where = array(
-                    'product_id' => $id
-                );
-                $this->m_rental->delete_data($where,'products');
-                redirect(base_url().'admin/products');
-            } 
-
-            function users()
-            {
-                $data['users'] = $this->m_rental->get_data('users')->result();
-                $this->load->view('admin/header');
-                $this->load->view('admin/users',$data);
-                $this->load->view('admin/footer');
-            }
-
-            function users_add()
-            {
-                $this->load->view('admin/header');
-                $this->load->view('admin/users_add');
-                $this->load->view('admin/footer');
-            }
-
-            function users_add_act() 
-            {
-                $nama   = $this->input->post('nama');
-                $alamat = $this->input->post('alamat');
-                $jk     = $this->input->post('jk');
-                $hp     = $this->input->post('hp');
-                $ktp    = $this->input->post('ktp');
-                $this->form_validation->set_rules('nama','Nama users','required');
-                $this->form_validation->set_rules('ktp','KTP users','required');
-
-                if($this->form_validation->run() != false) {
-                    $data = array(
-                        'users_nama'     => $nama,
-                        'users_alamat'   => $alamat,
-                        'users_jk'       => $jk,
-                        'users_hp'       => $hp,
-                        'users_ktp'      => $ktp
-                    );
-                    $this->m_rental->insert_data($data,'users');
-                    redirect(base_url().'admin/users');
-                } else {
-                    $this->load->view('admin/header');
-                    $this->load->view('admin/users_add');
-                    $this->load->view('admin/footer');
-                }
-            }
-
-            function users_edit($id)
-            {
-                $where = array(
-                    'user_id' => $id
-                );
-                $data['users'] = $this->m_rental->edit_data($where,'users')->result();
-                $this->load->view('admin/header');
-                $this->load->view('admin/users_edit',$data);
-                $this->load->view('admin/footer');
-            }
-
-            function users_update()
-            {
-                $id     = $this->input->post('id');
-                $nama   = $this->input->post('nama');
-                $alamat = $this->input->post('alamat');
-                $jk     = $this->input->post('jk');
-                $hp     = $this->input->post('hp');
-                $ktp    = $this->input->post('ktp');
-                $this->form_validation->set_rules('nama','Nama users','required');
-                $this->form_validation->set_rules('ktp','KTP users','required');
-
-                if($this->form_validation->run() != false) {
-                    $where = array(
-                        'user_id' => $id
-                    );
-                    $data = array(
-                        'users_nama'     => $nama,
-                        'users_alamat'   => $alamat,
-                        'users_jk'       => $jk,
-                        'users_hp'       => $hp,
-                        'users_ktp'      => $ktp
-                    );
-                    $this->m_rental->update_data($where,$data,'users');
-                    redirect(base_url().'admin/users');
-                } else {
-                    $where = array(
-                        'user_id' => $id
-                    );
-                    $data['users'] = $this->m_rental->edit_data($where,'users')->result();
-                    $this->load->view('admin/header');
-                    $this->load->view('admin/users_edit',$data);
-                    $this->load->view('admin/footer');
-                }
-            }
-
-            function users_delete($id)
-            {
-                $where = array(
-                    'user_id' => $id
-                );
-                $this->m_rental->delete_data($where,'users');
-                redirect(base_url().'admin/users');
-            }
-            
-            function orders()
-            {
-                $data['orders'] = $this->db->query("SELECT * FROM orders, products, users WHERE orders_products=product_id AND orders_users=user_id")->result();
-                $this->load->view('admin/header');
-                $this->load->view('admin/orders',$data);
-                $this->load->view('admin/footer');
-            }
-
-            function orders_hapus($id){
-                $w = array(
-                    'order_id' => $id
-                );
-                $data = $this->m_rental->edit_data($w,'orders')->row();
-
-                $ww = array(
-                    'product_id' => $data->orders_products
-                );
-                $data2 = array(
-                    'products_status' => '1'
-                );
-                $this->m_rental->update_data($ww,$data2,'products');
-
-                $this->m_rental->delete_data($w,'orders');
-                redirect(base_url().'admin/orders');
-            }
-
-            function orders_add()
-            {
-                $w = array('products_status'=>'1');
-                $data['products'] = $this->m_rental->edit_data($w,'products')->result();
-                $data['users'] = $this->m_rental->get_data('users')->result();
-                $this->load->view('admin/header');
-                $this->load->view('admin/orders_add',$data);
-                $this->load->view('admin/footer');
-            }
-
-            function orders_add_act() 
-            {
-                $users       = $this->input->post('users');
-                $products          = $this->input->post('products');
-                $tgl_pinjam     = $this->input->post('tgl_pinjam');
-                $tgl_kembali    = $this->input->post('tgl_kembali');
-                $harga          = $this->input->post('harga');
-                $denda          = $this->input->post('denda');
-
-                $this->form_validation->set_rules('users','users','required');
-                $this->form_validation->set_rules('products','products','required');
-                $this->form_validation->set_rules('tgl_pinjam','Tanggal Pinjam','required');
-                $this->form_validation->set_rules('tgl_kembali','Tanggal Kembali','required');
-                $this->form_validation->set_rules('harga','Harga','required');
-                $this->form_validation->set_rules('denda','Denda','required');
-
-                if($this->form_validation->run() != false) {
-                    $data = array(
-                        'orders_karyawan'    => $this->session->userdata('id'),
-                        'orders_users'    => $users,
-                        'orders_products'       => $products,
-                        'orders_tgl_pinjam'  => $tgl_pinjam,
-                        'orders_tgl_kembali' => $tgl_kembali,
-                        'orders_harga'       => $denda,
-                        'orders_denda'       => $harga,
-                    );
-                    $this->m_rental->insert_data($data,'orders');
-                    // Update status products yang dipinjam
-                    $d = array(
-                        'products_status' => '2'
-                    );
-                    $w = array(
-                        'product_id' => $products
-                    );
-                    $this->m_rental->update_data($w, $d, 'products');
-                    // Menghitung Total Harga Pinjam
-                    // $bataskembali = strtotime($tgl);
-                    redirect(base_url().'admin/orders');
-                } else {
-                    $w = array('products_status'=>'1');
-                    $data['products'] = $this->m_rental->edit_data($w,'products')->result();
-                    $data['users'] = $this->m_rental->get_data('users')->result();
-                    $this->load->view('admin/header');
-                    $this->load->view('admin/users_add');
-                    $this->load->view('admin/footer');
-                }
-            }
-            function orders_selesai($id){
-                $data['products'] = $this->m_rental->get_data('products')->result();
-                $data['users'] = $this->m_rental->get_data('users')->result();
-                $data['orders'] = $this->db->query("select * from orders,products,users where orders_products=product_id and orders_users=user_id and order_id='$id'")->result();
-                $this->load->view('admin/header');
-                $this->load->view('admin/orders_selesai',$data);
-                $this->load->view('admin/footer');
-            }
-            function orders_selesai_act(){
-                $id = $this->input->post('id');
-                $tgl_dikembalikan = $this->input->post('tgl_dikembalikan');
-                $tgl_kembali = $this->input->post("tgl_kembali");
-                $products = $this->input->post('products');
-                $denda = $this->input->post('denda');
-
-                $this->form_validation->set_rules('tgl_dikembalikan','Tanggal Di Kembalikan', 'required');
-
-                if($this->form_validation->run() != false){
-                    //menghitung selisih hari
-                    $batas_kembali = strtotime($tgl_kembali);
-                    $dikembalikan = strtotime($tgl_dikembalikan);
-                    $selisih = abs(($batas_kembali - $dikembalikan)/(60*60*24));
-                    $total_denda = $denda*$selisih;
-
-                    //update status orders
-                    $data = array(
-                        'orders_tgldikembalikan' => $tgl_dikembalikan,
-                        'orders_status' => '1',
-                        'orders_totaldenda' => $total_denda
-                    );
-                    $w = array(
-                        'order_id' => $id
-                    );
-
-                    $this->m_rental->update_data($w,$data,'orders');
-
-                    //update status products
-                    $data2 = array(
-                        'products_status' => '1'
-                    );
-                    $w2 = array(
-                        'product_id' => $products
-                    );
-
-                    $this->m_rental->update_data($w2,$data2,'products');
-                    redirect(base_url().'admin/orders');
-                }else{
-                    $data['products'] = $this->m_rental->get_data('products')->result();
-                    $data['users'] = $this->m_rental->get_data('users')->result();
-                    $data['orders'] = $this->db->query("select * from orders,products,users where orders_products=product_id and orders_users=user_id and order_id='$id'")->result();
-
-                    $this->load->view('admin/header');
-                    $this->load->view('admin/orders_selesai',$data);
-                    $this->load->view('admin/footer');
-                }
-            }
             function laporan(){
                 $dari = $this->input->post('dari');
                 $sampai = $this->input->post('sampai');
@@ -451,6 +267,6 @@ class Admin extends CI_Controller
                     redirect("admin/laporan");
                 }
             }
-            */
-}
+        
+
 ?>

@@ -6,11 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kedai Kopi</title>
-    <link rel="stylesheet" href="<?php echo base_url() . 'assets/assets_user/css/bootstrap.min.css' ?>">
+    <link rel="stylesheet" href="<?php echo base_url() . 'assets/css/bootstrap.min.css' ?>">
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-    <link rel="stylesheet" href="<?php echo base_url() . 'assets/css/style.css' ?>">
+    <link rel="stylesheet" href="<?php echo base_url() . 'assets/css/customer.css' ?>">
+	<!-- flaticon -->
 	<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
-    
+	<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <!-- sweetalert2 -->
+	<link rel="stylesheet" href="<?php echo base_url() . 'assets/css/sweetalert2.min.css' ?>">
+	<!-- <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet"> -->
+	<!-- <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.4/dist/sweetalert2.min.css" rel="stylesheet"> -->
+	
+
 	<style>
         .container {
   position: relative;
@@ -68,9 +75,16 @@
                             aria-hidden="true">&rarr;</span></a>
                 </div>
                 <!-- <div class="text-black font-bold text-xl">My Website</div> -->
+				<?php
+				$cart = $this->cart->contents();
+				$total_item = 0;
+				foreach ($cart as $value):
+					$total_item = $total_item + $value['qty'];
+				endforeach;
+				?>
                 <div class="flex lg:hidden gap-4">
                     <div class="flex gap-2" id="cart">
-                        <h2 class="text-md font-medium text-gray-900">0</h2>
+                        <h2 class="text-md font-medium text-gray-900"><?= $total_item?></h2>
                         <a href="<?php echo base_url('app/cart/'); ?>">
                             <img class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 src="<?= base_url('/assets/icons/shopping-bag.png') ?>">

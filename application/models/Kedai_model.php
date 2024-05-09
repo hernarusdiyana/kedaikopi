@@ -55,6 +55,33 @@ class Kedai_model extends CI_Model
         $this->db->where($where);
         $this->db->delete($table);
     }
+	public function delete($id)
+	{
+		if(!$id){
+			return;
+		}
 
+		$this->db->delete($this->_table, ['product_id' => $id]);
+	}
+	function insert_order($order_data, $cart_data) {
+		// Masukkan data order ke dalam tabel 'orders'
+        $this->db->insert('orders', $order_data);
 
+        // Dapatkan ID order yang baru saja dimasukkan
+        $order_id = $this->db->insert_id();
+
+        // Masukkan detail order dari library Cart ke dalam tabel 'order_items'
+        foreach ($cart_data as $item) {
+            $data = array(
+                'order_id' => $order_id,
+                'product_id' => $item['id'],
+                'quantity' => $item['qty'],
+                'price' => $item['price'],
+                'total' => $item['subtotal'],
+                // ... (Tambahkan kolom lainnya sesuai kebutuhan)
+            );
+
+            $this->db->insert('order_items', $data);
+		}
+	}
 }

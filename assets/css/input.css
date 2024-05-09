@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.collapsible {
+	background-color: #3498db;
+	color: white;
+	cursor: pointer;
+	padding: 10px;
+	width: 100%;
+	text-align: left;
+	border: none;
+	outline: none;
+	font-size: 16px;
+}
+
+.content {
+	display: none;
+	overflow: hidden;
+	background-color: #f1f1f1;
+	padding: 10px;
+}

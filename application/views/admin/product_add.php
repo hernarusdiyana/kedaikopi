@@ -1,42 +1,54 @@
-        <div class="content-wrapper">
-            <div class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-							<div class="flex gap-2">
-								<button id="backBtn">
-									<i class="fi fi-br-angle-left"></i>
-								</button>
-								<h1 class=" text-lg font-medium mb-1">Tambah Menu</h1>
-							</div>
-                        </div>
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Menu</li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <section class="content">
-                <div class="container-fluid">
-                <div class="page-header">
-        <h3></h3>
-    </div>
+<div class="bg-white p-4 rounded-md">
+	<!-- start breadcrumb -->
+	<div class="relative">
+		<div class="absolute top-0 right-0">
+			<ol class="flex items-center space-x-4">
+			<!-- Home breadcrumb -->
+			<li>
+			<a href="<?= base_url('admin/')?>" class="text-gray-500 hover:text-gray-700">Dashboard</a>
+			</li>
+			<!-- Separator -->
+			<li>
+			<span class="text-gray-500">/</span>
+			</li>
+			<!-- First-level breadcrumb -->
+			<li>
+			<a href="<?= base_url('admin/products')?>" class="text-gray-500 hover:text-gray-700">Produk</a>
+			</li>
+			<!-- Separator -->
+			<li>
+			<span class="text-gray-500">/</span>
+			</li>
+			<!-- Current page -->
+			<li>
+			<span class="text-gray-700">Tambah Produk</span>
+			</li>
+			</ol>
+		</div>
+	</div>
+	<!-- end breadcrumb -->
+	<div class="space-y-2">
+		<div class="mb-4">
+		<h2 class="text-base font-semibold leading-7 text-gray-900">Tambah Produk Baru</h2>
+		<p class="mt-1 text-sm leading-6 text-gray-600">This information will be displayed publicly so be careful what you share.</p>
+		</div>
+	</div>
+
 	<!-- <?php echo $error;?> -->
 
 	<?php echo form_open_multipart('admin/addproduct');?>
 
     <!-- <form action="<?php echo base_url().'admin/addproduct' ?>" method="POST"> -->
-        <div class="form-group">
-            <label>Nama Menu</label>
-            <input type="text" name="name" class="form-control" required>
+	<div class="">
+		<div class="grid grid-cols-1 gap-x-6 gap-y-8 sm-grid-cols-6 space-y-2">
+        <div class="flex flex-col gap-2">
+            <label>Nama Produk</label>
+            <input type="text" name="name" class="py-2 px-5 rounded-lg bg-white border" placeholder="Masukkan Nama Produk"required>
             <?php echo form_error('merk'); ?>
         </div>
-		<div class="form-group">
+		<div class="flex flex-col gap-2">
 			<label>Jenis</label>
-			<select name="category" class="form-control" required>
+			<select name="category" class="py-2 px-5 rounded-lg bg-white border" required>
 				<option value="Kopi">Kopi</option>
 				<option value="Bukan Kopi">Bukan Kopi</option>
 				<option value="Makanan">Makanan</option>
@@ -44,22 +56,27 @@
 			</select>
 			<?php echo form_error('status'); ?>
 		</div>
-        <div class="form-group">
+        <div class="flex flex-col gap-2">
             <label>Harga</label>
-            <input type="number" name="price" class="form-control" required>
+            <input type="number" name="price" class="py-2 px-5 rounded-lg bg-white border" required>
         </div>
-		<div class="form-group">
+		<div class="flex flex-col gap-2">
 			<label for="image">Gambar Produk</label>
 			<input type="file" name="image" required>
 		</div>
+		
         
         
-		<button id="openModalBtn" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+		<button  type="submit" id="openModalBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out" style="background-color: #3490dc !important;"  onmouseover="this.style.backgroundColor='#2980b9'" 
+        onmouseout="this.style.backgroundColor='#3498db'">
 		Tambah
 		</button>
+		<!-- <input id="openModalBtn" class="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md" style="background-color: #3490dc !important;"  onmouseover="this.style.backgroundColor='#2980b9'" 
+        onmouseout="this.style.backgroundColor='#3498db'" type="submit" value="Tambah" cursor="pointer">
+		</input> -->
 
 		<!-- Main modal -->
-		<div id="myModal" class="modal hidden mt-40 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-4 w-full max-w-2xl max-h-full overflow-y-auto rounded-md ">
+		<div id="myModal" class="modal hidden mt-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-4 w-full max-w-2xl max-h-full overflow-y-auto rounded-md ">
 		<!-- <div id="myModal" class="modal hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"> -->
 			
 				<!-- Modal content -->
@@ -88,17 +105,19 @@
 					<!-- Modal footer -->
 					<div class="flex items-center gap-2 p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
 						
-							<input type="submit" value="Tambahkan Produk" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+							<input type="submit" value="Tambahkan Produk" class="block text-black bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
 						<button id="closeModalBtn" data-modal-hide="default-modal" type="button" class="ms-3 text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Nanti dulu</button>
 					</div>
 				</div>
 			</div>
 		</div>
-				
+		</div>
+	</div>				
 
 		<!-- Modal Button -->
 
 
     </form>
+	</section>
+  </div>
 
-    

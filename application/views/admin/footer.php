@@ -10,14 +10,9 @@
 
 
     <script src=" <?php echo base_url() . 'assets/vendor/AdminLTE-3.2.0/plugins/jquery/jquery.min.js' ?>"></script>
-
     <script src=" <?php echo base_url() . 'assets/vendor/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js' ?>"></script>
-
     <script src=" <?php echo base_url() . 'assets/vendor/AdminLTE-3.2.0/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' ?>"></script>
-
     <script src=" <?php echo base_url() . 'assets/vendor/AdminLTE-3.2.0/dist/js/adminlte.js?v=3.2.0' ?>"></script>
-
-
     <script src=" <?php echo base_url() . 'assets/vendor/AdminLTE-3.2.0/plugins/jquery-mousewheel/jquery.mousewheel.js' ?>"></script>
     <script src=" <?php echo base_url() . 'assets/vendor/AdminLTE-3.2.0/plugins/raphael/raphael.min.js' ?>"></script>
     <script src=" <?php echo base_url() . 'assets/vendor/AdminLTE-3.2.0/plugins/jquery-mapael/jquery.mapael.min.js' ?>"></script>

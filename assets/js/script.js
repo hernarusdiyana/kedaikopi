@@ -1,64 +1,20 @@
-//NAV SIDEBAR
+//NAV sideBar
 // function toggleMenu() {
 // 	console.log("Tombol Ikon Menu Diklik");
 
 // 	var navList = document.querySelector(".nav-list");
 // 	navList.classList.toggle("show");
 // }
-document.addEventListener("DOMContentLoaded", function () {
-	const toggleButton = document.getElementById("toggleButton");
-	const menu = document.getElementById("menu");
-	console.log("Tombol Ikon Menu Diklik");
+// document.addEventListener("DOMContentLoaded", function () {
+// 	const toggleButton = document.getElementById("toggleButton");
+// 	const menu = document.getElementById("menu");
+// 	console.log("Tombol Ikon Menu Diklik");
 
-	toggleButton.addEventListener("click", function () {
-		menu.classList.toggle("hidden");
-	});
-});
+// 	toggleButton.addEventListener("click", function () {
+// 		menu.classList.toggle("hidden");
+// 	});
+// });
 // CART
-function increase1Value() {
-	var value = parseInt(document.getElementById("number1").value, 10);
-	value = isNaN(value) ? 0 : value;
-	value++;
-	document.getElementById("number1").value = value;
-}
-
-function decrease1Value() {
-	var value = parseInt(document.getElementById("number1").value, 10);
-	value = isNaN(value) ? 0 : value;
-	value < 1 ? (value = 1) : "";
-	value--;
-	document.getElementById("number1").value = value;
-}
-
-function increase2Value() {
-	var value = parseInt(document.getElementById("number2").value, 10);
-	value = isNaN(value) ? 0 : value;
-	value++;
-	document.getElementById("number2").value = value;
-}
-
-function decrease2Value() {
-	var value = parseInt(document.getElementById("number2").value, 10);
-	value = isNaN(value) ? 0 : value;
-	value < 1 ? (value = 1) : "";
-	value--;
-	document.getElementById("number2").value = value;
-}
-
-function increase3Value() {
-	var value = parseInt(document.getElementById("number").value, 10);
-	value = isNaN(value) ? 0 : value;
-	value++;
-	document.getElementById("number").value = value;
-}
-
-function decrease3Value() {
-	var value = parseInt(document.getElementById("number").value, 10);
-	value = isNaN(value) ? 0 : value;
-	value < 1 ? (value = 1) : "";
-	value--;
-	document.getElementById("number").value = value;
-}
 
 // Back Button
 document.addEventListener("DOMContentLoaded", function () {
@@ -73,27 +29,25 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // OPEN CLOSE MODAL
-document.addEventListener('DOMContentLoaded', function () {
-	var openModalBtn = document.getElementById('openModalBtn');
-	var closeModalBtn = document.getElementById('closeModalBtn');
-	var modal = document.getElementById('myModal');
-  
-	openModalBtn.addEventListener('click', function () {
-	  modal.style.display = 'block';
-	});
-  
-	closeModalBtn.addEventListener('click', function () {
-	  modal.style.display = 'none';
-	});
-  
-	window.addEventListener('click', function (event) {
-	  if (event.target === modal) {
-		modal.style.display = 'none';
-	  }
-	});
-  });
-  
+document.addEventListener("DOMContentLoaded", function () {
+	var openModalBtn = document.getElementById("openModalBtn");
+	var closeModalBtn = document.getElementById("closeModalBtn");
+	var modal = document.getElementById("myModal");
 
+	openModalBtn.addEventListener("click", function () {
+		modal.style.display = "block";
+	});
+
+	closeModalBtn.addEventListener("click", function () {
+		modal.style.display = "none";
+	});
+
+	window.addEventListener("click", function (event) {
+		if (event.target === modal) {
+			modal.style.display = "none";
+		}
+	});
+});
 
 document.addEventListener("DOMContentLoaded", function () {
 	// Ambil elemen tombol dan daftar pilihan metode pembayaran
@@ -106,3 +60,40 @@ document.addEventListener("DOMContentLoaded", function () {
 		paymentOptions.classList.toggle("hidden");
 	});
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+	var sideBarHideBtn = document.getElementById("sideBarHideBtn");
+	// console.log(sideBarHideBtn);
+	var sideBar = document.getElementById("sideBar");
+	// console.log(sideBar);
+	var sliderBtn = document.getElementById("sliderBtn");
+
+	sliderBtn.addEventListener("click", function () {
+		sideBar.classList.remove("hidden");
+	});
+
+	sideBarHideBtn.addEventListener("click", function () {
+		if (sideBar.classList.contains("hidden")) {
+			sideBar.classList.remove("hidden");
+		} else {
+			sideBar.classList.add("hidden");
+		}
+	});
+});
+
+// document.addEventListener("DOMContentLoaded", function() {
+// 	var sideBarHideBtn = document.getElementById("sideBarHideBtn");
+// 	var sideBarShowBtn = document.getElementById("sideBarShowBtn");
+// 	var sidebar = document.getElementById("sideBar");
+
+// 	// Tambahkan event listener untuk tombol sidebar yang menampilkan sidebar
+// 	sideBarShowBtn.addEventListener("click", function() {
+// 		sidebar.classList.add("md:ml-0"); // Tampilkan sidebar pada tampilan desktop (lebar >= 768px)
+// 	});
+
+// 	// Tambahkan event listener untuk tombol sidebar yang menyembunyikan sidebar
+// 	sideBarHideBtn.addEventListener("click", function() {
+// 		sidebar.classList.remove("md:ml-0"); // Sembunyikan sidebar pada tampilan desktop (lebar >= 768px)
+// 	});
+// });
+
