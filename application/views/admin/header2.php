@@ -27,9 +27,9 @@
     <!-- logo -->
     <div class="flex-none w-56 flex flex-row items-center">
 			<a href="<?= base_url('admin')?>">
-				<img src="img/logo.png" class="w-10 flex-none">
+				<img src="<?= base_url('/assets/images/aza_logo.png')?>" class="w-10 flex-none">
 			</a>
-				<strong class="capitalize ml-1 flex-1">tudeMoon</strong>
+				<strong class="capitalize ml-1 flex-1">Kedai Kopi Aza</strong>
       <button id="sliderBtn" class="flex-none text-right text-gray-900 hidden md:block">
         <i class="fad fa-list-ul"></i>
       </button>
@@ -45,7 +45,7 @@
 	</div>
 
 	<div class="ml-2 capitalize flex ">
-		<h1 class="text-sm text-gray-800 font-semibold m-0 p-0 leading-none">Eldrich</h1>
+		<h1 class="text-sm text-gray-800 font-semibold m-0 p-0 leading-none">Admin</h1>
 		<i class="fad fa-chevron-down ml-2 text-xs leading-none"></i>
 	</div>
 </button>
@@ -68,19 +68,6 @@
 	</a>
 	<!-- end item -->
 
-	<!-- item -->
-	<!-- <a class="px-4 py-2 block capitalize font-medium text-sm tracking-wide bg-white hover:bg-gray-200 hover:text-gray-900 transition-all duration-300 ease-in-out" href="#">
-		<i class="fad fa-badge-check text-xs mr-1"></i>
-		tasks
-	</a> -->
-	<!-- end item -->
-
-	<!-- item -->
-	<!-- <a class="px-4 py-2 block capitalize font-medium text-sm tracking-wide bg-white hover:bg-gray-200 hover:text-gray-900 transition-all duration-300 ease-in-out" href="#">
-		<i class="fad fa-comment-alt-dots text-xs mr-1"></i>
-		chats
-	</a> -->
-	<!-- end item -->
 
 	<hr>
 
@@ -365,20 +352,20 @@
         </a>
         <!-- end link -->
 
-        <p class="uppercase text-xs text-gray-600 mb-4 mt-4 tracking-wider">apps</p>
+        <!-- <p class="uppercase text-xs text-gray-600 mb-4 mt-4 tracking-wider">apps</p> -->
 
         <!-- link -->
-        <a href="./email.html" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500">
+        <!-- <a href="./email.html" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500">
           <i class="fad fa-envelope-open-text text-xs mr-2"></i>
           email
-        </a>
+        </a> -->
         <!-- end link -->
 
         <!-- link -->
-        <a href="#" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500">
+        <!-- <a href="#" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500">
           <i class="fad fa-comments text-xs mr-2"></i>
           chat
-        </a>
+        </a> -->
         <!-- end link -->
 
       </div>

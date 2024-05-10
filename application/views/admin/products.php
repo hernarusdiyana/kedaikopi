@@ -51,7 +51,7 @@
 								<?php foreach($products as $product): ?>
 								<tr>
 									<td class="p-2 border border-slate-700"><?= $product->product_id?></td>
-									<td class="p-2 text-center align-middle  border border-slate-700"><img src="data:image/jpeg;base64,<?= base64_encode($product->image) ?>" alt="Gambar Produk" class="w-24 h-24 object-cover" loading="lazy"></td>
+									<td class="p-2 flex justify-center align-middle  border border-slate-700"><img src="data:image/jpeg;base64,<?= base64_encode($product->image) ?>" alt="Gambar Produk" class="w-24 h-24 object-cover text-center" loading="lazy"></td>
 									<td class="p-2 border border-slate-700"><?= $product->name?></td>
 									<td class="p-2 border border-slate-700"><?= $product->category?></td>
 									<td class="p-2 border border-slate-700">Rp <?= number_format($product->price, 0, ',', '.') ?></div>

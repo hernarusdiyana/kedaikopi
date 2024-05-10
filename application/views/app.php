@@ -8,8 +8,9 @@
 		<?php foreach($products as $product): 
 			echo form_open('app/add_to_cart');
 			echo form_hidden('id', $product->product_id);
-			echo form_hidden('qty',1);
+			echo form_hidden('qty', 1);
 			echo form_hidden('name', $product->name);
+			echo form_hidden('image', base64_encode($product->image));
 			echo form_hidden('price', $product->price);
 			echo form_hidden('redirect_page', str_replace('index.php/','',current_url()));
 		?>

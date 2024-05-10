@@ -15,8 +15,7 @@
          <div class="group relative flex justify-between rounded-lg py-4 h-28" id="order">
             <div class="flex gap-x-6">
                <div class="h-20 w-20 overflow-hidden rounded-md bg-gray-900 lg:aspect-none">
-                  <img src="<?php echo base_url() . 'assets/images/latte.jpg' ?>" alt="Coffee Latte."
-                              class="object-center">
+					<img src="data:image/jpeg;base64,<?= $item['image']; ?>" alt="" class="object-cover object-center rounded-md md:h-80 lg:h-80">
                </div>
                <div class="grid grid-col-1 gap-y-1">
                   <h3 class="text-sm text-gray-700 w-full ">
@@ -83,22 +82,7 @@
                 <label for="qris" class="flex-grow text-sm font-normal cursor-pointer">Qris</label>
                 <input type="radio" name="metode_pembayaran" value="qris" id="qris">
             </div>
-				<!-- <div class="payment-option flex items-center rounded-md gap-3 cursor-pointer border-b border-gray-100 hover:bg-white" onclick="redirectToPaymentDetail('payment_method_1')">
-                <div class="flex justify-center h-14 w-16 items-center">
-                        <img src="<?php echo base_url() . 'assets/images/logo_bca.png' ?>" alt=""
-                                    class="w-full object-cover object-center mx-auto my-auto">
-                    </div>
-                <label for="bca" class="flex-grow text-sm font-normal cursor-pointer">Tranfer BCA</label>
-                <input type="radio" name="metode_pembayaran" value="bca" id="bca">
-            </div>
-				<div class="payment-option flex items-center rounded-md gap-3 cursor-pointer border-b border-gray-100 hover:bg-white" onclick="redirectToPaymentDetail('payment_method_1')">
-                <div class="flex justify-center h-14 w-16 items-center">
-                        <img src="<?php echo base_url() . 'assets/images/logo_dana.png' ?>" alt=""
-                                    class="w-full object-cover object-center mx-auto my-auto">
-                    </div>
-                <label for="dana" class="flex-grow text-sm font-normal cursor-pointer">Dana</label>
-                <input type="radio" name="metode_pembayaran" value="dana" id="dana">
-            </div> -->
+				
    	   </div>
 		
 

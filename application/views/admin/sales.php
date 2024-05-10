@@ -28,14 +28,15 @@
 	</div>
 	<div class="">
 		<table class="min-w-full border-collapse border border-slate-500" id="orderTable">
-		<a href="<?= base_url('invoice/export_pdf'); ?>">Export to CSV</a>
-
+			<div class="mb-3">
+				<a href="<?= base_url('invoice/export_pdf'); ?>" class="bg-yellow-300 text-white rounded px-4 py-2 mb-4  "><i class="fad fa-print text-xs mr-2"></i>Export</a>
+			</div>
 			<thead class="bg-white">
 				<tr>
 				<th class="p-3 whitespace-no-wrap text-xs leading-4 font-medium  border-b border-gray-200">Order ID</th>
 				<th class="p-3 whitespace-no-wrap text-xs leading-4 font-medium  border-b border-gray-200">Date</th>
 				<th class="p-3 whitespace-no-wrap text-xs leading-4 font-medium  border-b border-gray-200">Nama</th>
-				<th class="p-3 whitespace-no-wrap text-xs leading-4 font-medium  border-b border-gray-200">Status</th>
+				<!-- <th class="p-3 whitespace-no-wrap text-xs leading-4 font-medium  border-b border-gray-200">Status</th> -->
 				<th class="p-3 whitespace-no-wrap text-xs leading-4 font-medium  border-b border-gray-200">Nomor Meja</th>
 				<th class="p-3 whitespace-no-wrap text-xs leading-4 font-medium  border-b border-gray-200">Notes</th>
 				<th class="p-3 whitespace-no-wrap text-xs leading-4 font-medium  border-b border-gray-200">Metode Pembayaran</th>
@@ -49,14 +50,14 @@
 				<td class="p-2 whitespace-no-wrap text-xs font-regular border-b border-gray-200"><?= $order->order_id?></td>
 				<td class="p-2 whitespace-no-wrap text-xs font-regular border-b border-gray-200"><?= $order->order_date?></td>
 				<td class="p-2 whitespace-no-wrap text-xs font-regular border-b border-gray-200"><?= $order->nama?></td>
-				<td class="p-2 whitespace-no-wrap text-xs font-medium border-b border-gray-200">
+				<!-- <td class="p-2 whitespace-no-wrap text-xs font-medium border-b border-gray-200">
 					<div class="inline-block py-2 w-full text-center px-4 rounded-md  
 						<?php if ($order->status === 'Lunas'): ?> bg-green-300 text-green-800 <?php endif;?>
 						<?php if ($order->status === 'Belum Bayar'): ?> bg-yellow-300 text-yellow-800 <?php endif;?>
 						<?php if ($order->status === 'Pending'): ?> bg-orange-300 text-orange-800 <?php endif;?>">
 							<?= $order->status ?>
 					</div>
-				</td>
+				</td> -->
 				<td class="p-2 whitespace-no-wrap text-xs text-center font-regular border-b border-gray-200"><?= $order->nomor_meja?></td>
 				<td class="p-2 whitespace-no-wrap text-xs font-regular border-b border-gray-200"><?= $order->notes?></td>
 				<td class="p-2 whitespace-no-wrap text-xs font-regular border-b border-gray-200"><?= $order->metode_pembayaran?></td>

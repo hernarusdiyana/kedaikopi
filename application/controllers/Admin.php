@@ -237,36 +237,36 @@ class Admin extends CI_Controller
 			$this->load->view('admin/footer2');
 		}
 	
+		function laporan(){
+			$dari = $this->input->post('dari');
+			$sampai = $this->input->post('sampai');
+			$this->form_validation->set_rules('dari','Dari Tanggal','required');
+			$this->form_validation->set_rules('sampai','Sampai Tanggal','required');
+	
+			if($this->form_validation->run() != false){
+				$data['laporan'] = $this->db->query("SELECT * FROM orders,products,users WHERE orders_products=product_id AND orders_users=user_id AND DATE(orders_tgl) >= '$dari'")->result();
+				$this->load->view('admin/header');
+				$this->load->view('admin/laporan_filter',$data);
+				$this->load->view('admin/footer');
+			}else{
+				$this->load->view('admin/header');
+				$this->load->view('admin/laporan');
+				$this->load->view('admin/footer');
+			}
+		}
+		function laporan_print(){
+			$dari = $this->input->get('dari');
+			$sampai = $this->input->get('sampai');
+	
+			if($dari != "" && $sampai != ""){
+				$data['laporan'] = $this->db->query("SELECT * FROM orders,products,users WHERE orders_products=product_id AND orders_users=user_id AND DATE(orders_tgl) >= '$dari'")->result();
+				$this->load->view('admin/laporan_print',$data);
+			}else{
+				redirect("admin/laporan");
+			}
+		}
 	}
 
-            function laporan(){
-                $dari = $this->input->post('dari');
-                $sampai = $this->input->post('sampai');
-                $this->form_validation->set_rules('dari','Dari Tanggal','required');
-                $this->form_validation->set_rules('sampai','Sampai Tanggal','required');
-
-                if($this->form_validation->run() != false){
-                    $data['laporan'] = $this->db->query("SELECT * FROM orders,products,users WHERE orders_products=product_id AND orders_users=user_id AND DATE(orders_tgl) >= '$dari'")->result();
-                    $this->load->view('admin/header');
-                    $this->load->view('admin/laporan_filter',$data);
-                    $this->load->view('admin/footer');
-                }else{
-                    $this->load->view('admin/header');
-                    $this->load->view('admin/laporan');
-                    $this->load->view('admin/footer');
-                }
-            }
-            function laporan_print(){
-                $dari = $this->input->get('dari');
-                $sampai = $this->input->get('sampai');
-
-                if($dari != "" && $sampai != ""){
-                    $data['laporan'] = $this->db->query("SELECT * FROM orders,products,users WHERE orders_products=product_id AND orders_users=user_id AND DATE(orders_tgl) >= '$dari'")->result();
-                    $this->load->view('admin/laporan_print',$data);
-                }else{
-                    redirect("admin/laporan");
-                }
-            }
         
 
 ?>

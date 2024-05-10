@@ -25,6 +25,7 @@ class App extends CI_Controller
             "id"    	=> $this->input->post('id'),
             "qty"    	=> $this->input->post('qty'),
             "name"    	=> $this->input->post('name'),
+            "image"    	=> $this->input->post('image'),
             "price"    	=> $this->input->post('price'),
 		);
         $this->cart->insert($data); // return row id
@@ -72,7 +73,8 @@ class App extends CI_Controller
                 <br/>
                 <table class="table table-bordered">
                     <tr>
-                        <th width="40%">Name</th>
+                        <th width="40%"></th>
+                        <th width="40%">Nama</th>
                         <th width="15%">Jumlah</th>
                         <th width="20%">Harga</th>
                         <th width="20%">Total</th>
@@ -84,6 +86,7 @@ class App extends CI_Controller
             $count++;
             $output .= '
             <tr>
+                <td><img src="data:image/jpeg;base64,' . $item["image"] . '" alt="" class=" h-34 object-cover rounded-md md:h-80 lg:h-80"></td>
                 <td>' . $item["name"] . '</td>
                 <td>' . $item["qty"] . '</td>
 				<td>Rp ' . number_format($item["price"], 0, ',', '.') . '</td>
